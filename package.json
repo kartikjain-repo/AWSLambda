@@ -1,0 +1,46 @@
+{
+  "name": "emp",
+  "version": "1.0.0",
+  "description": "add employee case study",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --collectCoverage ",
+    "remove": "sls remove",
+    "deploy": "sls deploy"
+  },
+  "dependencies": {
+    "@types/jest": "^26.0.14",
+    "aws-sdk": "^2.758.0",
+    "copy-webpack-plugin": "^6.1.1",
+    "dynamo-types": "^2.10.1",
+    "serverless": "^2.1.1",
+    "source-map-support": "^0.5.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@shelf/jest-dynamodb": "^1.7.0",
+    "@types/aws-lambda": "^8.10.17",
+    "@types/node": "^10.12.18",
+    "@types/serverless": "^1.72.5",
+    "aws-lambda-mock-context": "^3.2.1",
+    "aws-sdk-mock": "^5.1.0",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
+    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "jest": "^26.4.2",
+    "serverless-jest-plugin": "^0.3.0",
+    "serverless-jetpack": "^0.10.7",
+    "serverless-webpack": "^5.3.5",
+    "ts-jest": "^26.4.1",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.2.4",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Kartik Jain",
+  "license": "ISC"
+}

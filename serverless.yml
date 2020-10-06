@@ -1,0 +1,78 @@
+
+service: employees
+custom:
+  webpack:
+    includeModules: true
+plugins:
+  - serverless-webpack
+  - serverless-jest-plugin
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-2
+  tracing:
+    apiGateway: true
+    lambda: true
+  logs: 
+    restApi: true  
+    lambda: true
+  stage: ${opt:stage, 'dev'}
+  environment:
+    DYNAMODB_TABLE: employee
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:BatchWriteItem
+        - dynamodb:PutItem
+      Resource: 
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+  apiKeys:
+    - first_${self:provider.stage}_key
+    - second_${self:provider.stage}_key
+  usagePlan:
+   quota: 
+    limit: 1000
+    period: MONTH
+   throttle: 
+    rateLimit: 5
+    burstLimit: 20 
+
+functions:
+  addEmployee:
+    handler: src/controller/controller.handler
+    events:
+      - http:
+          path: employee
+          method: post
+          cors: true
+          private: true
+
+resources:
+  Resources:
+    EmployeeDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+          -
+            AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+          -
+            AttributeName: userId
+            KeyType: RANGE  
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 5
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+  
+
+
+
+
